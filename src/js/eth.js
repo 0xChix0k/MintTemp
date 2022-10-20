@@ -380,9 +380,7 @@ async function writeInfo() {
   document.getElementById('totalSupply').innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
   document.getElementById('nftPrice').innerText = contractPrice;
   document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
-  document.getElementById('transfer').innerText = 'Mint Now';
   document.getElementById('connectW').innerText = 'CONNECT WALLET';
-  document.getElementById('connectInfo').innerText = 'unconnect...';
 }
 function isConnect() {
   const isConnect = document.getElementById('connectInfo').textContent;

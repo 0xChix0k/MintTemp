@@ -6,6 +6,7 @@ document.getElementById('dateString').innerText = collectionInfo.lunchDate;
 document.getElementById('totalSupply').innerText = `XXXX / ${ collectionInfo.maxTotal }`;
 document.getElementById('nftsNumber').innerText = collectionInfo.minMint;
 document.getElementById('maxNumber').innerText = collectionInfo.maxMint;
+
 switch (collectionInfo.background.type) {
   case 'video':
     document.getElementById('background-video').poster = `./assets/${collectionInfo.background.image}`;
