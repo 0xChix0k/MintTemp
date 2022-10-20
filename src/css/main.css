@@ -48,6 +48,11 @@ html {
     font-weight: bold;
     color: #FFFFFF;
 }
+@media (width <= 512px){
+    #claim-text-wrapper .connect #connectInfo{
+        font-size: 10px;
+    }
+}
 /* #claim-text-wrapper .connect #connectW:hover{
     background-color: transparent;
     color: #fff;

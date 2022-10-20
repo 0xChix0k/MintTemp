@@ -381,20 +381,21 @@ async function writeInfo() {
   document.getElementById('nftPrice').innerText = contractPrice;
   document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
   document.getElementById('connectW').innerText = 'CONNECT WALLET';
+  // document.getElementById('connectInfo').innerText = 'UNCONNECT...';
 }
-function isConnect() {
-  const isConnect = document.getElementById('connectInfo').textContent;
-  if (isConnect !== 'unconnect...') {
-    // console.log(true);
-    return true;
-  } else {
-    // console.log(false);
-    return false;
-  }
-}
+// function isConnect() {
+//   const isConnect = document.getElementById('connectInfo').textContent;
+//   if (isConnect !== 'UNCONNECT...') {
+//     // console.log(true);
+//     return true;
+//   } else {
+//     // console.log(false);
+//     return false;
+//   }
+// }
 async function connect() {
-  const connectInfo = document.getElementById('connectInfo').textContent;
-  if (!isConnect()) {
+  // const connectInfo = document.getElementById('connectInfo').textContent;
+  // if (!isConnect()) {
     web3Wallet();
     try {
       const instance = await web3Modal.connect();
@@ -414,9 +415,9 @@ async function connect() {
       console.log('Could not get a wallet connection', e);
       return 'err';
     }
-  } else if (connectInfo === 'Loading...') {
-    console.log('Page is Loading...');
-  }
+  // } else if (connectInfo === 'Loading...') {
+  //   console.log('Page is Loading...');
+  // }
 }
 async function getWallet() {
   const params = [{ chainId: metamaskHexChainID }];
