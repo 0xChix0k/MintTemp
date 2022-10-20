@@ -1,3 +1,11 @@
+document.getElementById('favicon').href = `./assets/${collectionInfo.medias.favicon}`;
+document.getElementById('price-img').src = `./assets/${collectionInfo.medias.preview}`;
+document.title = collectionInfo.projectName;
+document.getElementById('titleH4').innerText = collectionInfo.projectName;
+document.getElementById('dateString').innerText = collectionInfo.lunchDate;
+document.getElementById('totalSupply').innerText = `XXXX / ${ collectionInfo.maxTotal }`;
+document.getElementById('nftsNumber').innerText = collectionInfo.minMint;
+document.getElementById('maxNumber').innerText = collectionInfo.maxMint;
 switch (collectionInfo.background.type) {
   case 'video':
     document.getElementById('background-video').poster = `./assets/${collectionInfo.background.image}`;

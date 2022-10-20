@@ -1,4 +1,9 @@
 const collectionInfo = {
+  projectName: 'Joke NFT',
+  lunchDate: '10.20.2022',
+  maxTotal: '10000',
+  minMint:'1',
+  maxMint: '2',
   socialMedia: {
     discord: 'discord.gg/invite_here',
     twitter: 'https://twitter.com/username_here',

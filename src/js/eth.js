@@ -336,11 +336,9 @@ const WalletConnectProvider = window.WalletConnectProvider.default;
 let web3Modal;
 let provider;
 let myContract;
-let nftName;
 let price;
 let contractPrice;
 let totalSupply;
-let maxTotal;
 let contractMinMint;
 let contractMaxMint;
 let lunchDate;
@@ -372,25 +370,15 @@ async function init() {
 async function getNFTInfo() {
   provider = new ethers.providers.JsonRpcProvider(apiURL);
   myContract = new ethers.Contract(address, ABI, provider);
-  nftName = await myContract.name();
   price = await myContract.price();
   contractPrice = parseFloat(ethers.utils.formatUnits(price, 'ether')).toFixed(2);
-  maxTotal = await myContract.maxTotal();
-  contractMinMint = 1;
-  contractMaxMint = await myContract.maxMint();
+  contractMinMint = Number(collectionInfo.minMint);
+  contractMaxMint = Number(collectionInfo.maxMint);
   totalSupply = await myContract.totalSupply();
-  lunchDate = '10.20.2022';
 }
 async function writeInfo() {
-  document.title = nftName;
-  document.getElementById('favicon').href = `./assets/${collectionInfo.medias.favicon}`;
-  document.getElementById('price-img').src = `./assets/${collectionInfo.medias.preview}`;
-  document.getElementById('titleH4').innerText = nftName;
-  document.getElementById('totalSupply').innerText = `${totalSupply} / ${maxTotal}`;
+  document.getElementById('totalSupply').innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
   document.getElementById('nftPrice').innerText = contractPrice;
-  document.getElementById('dateString').innerText = lunchDate;
-  document.getElementById('nftsNumber').innerText = contractMinMint;
-  document.getElementById('maxNumber').innerText = contractMaxMint;
   document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
   document.getElementById('transfer').innerText = 'Mint Now';
   document.getElementById('connectW').innerText = 'CONNECT WALLET';
@@ -482,8 +470,8 @@ async function mint() {
         totalSupply = await myContract.totalSupply();
       })
       .then(() => {
-        alert(`Congratulations!\n You have minted ${amount} ${nftName} !`);
-        document.getElementById('totalSupply').innerText = `${totalSupply} / ${maxTotal}`;
+        alert(`Congratulations!\n You have minted ${amount} ${collectionInfo.projectName} !`);
+        document.getElementById('totalSupply').innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
       });
   } catch (error) {
     console.log(error);
@@ -503,6 +491,7 @@ const mintBtn = document.getElementById('transfer');
 mintBtn.addEventListener('click', async () => {
   mint();
 });
-window.addEventListener('load', async () => {
-  init();
-});
+// window.addEventListener('load', async () => {
+//   init();
+// });
+init();
