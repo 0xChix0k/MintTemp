@@ -418,8 +418,7 @@ async function connect() {
 async function getWallet() {
   const params = [{ chainId: metamaskHexChainID }];
   const addr = await signer.getAddress();
-  try {
-    await provider.provider
+  await provider.provider
     .request({
       method: 'wallet_switchEthereumChain',
       params: params,
@@ -429,20 +428,6 @@ async function getWallet() {
       document.getElementById('transfer').style.display = 'block';
       document.getElementById('connectW').style.display = 'none';
     });
-  } catch (switchError) {
-    console.log('111');
-    if (switchError.code === 4902) {
-      try {
-        await provider.provider.request({
-          method: 'wallet_addEthereumChain',
-          params: params,
-        });
-        console.log('rrr');
-      } catch (addError) {
-        console.log('eeee');
-      }
-    }
-  }
 }
 function decrement() {
   contractMinMint = document.getElementById('nftsNumber').textContent;
@@ -500,7 +485,4 @@ const mintBtn = document.getElementById('transfer');
 mintBtn.addEventListener('click', async () => {
   mint();
 });
-// window.addEventListener('load', async () => {
-//   init();
-// });
 init();
