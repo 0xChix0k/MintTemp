@@ -394,13 +394,11 @@ async function writeInfo() {
 //   }
 // }
 async function connect() {
-  // const connectInfo = document.getElementById('connectInfo').textContent;
-  // if (!isConnect()) {
     web3Wallet();
     try {
       const instance = await web3Modal.connect();
       provider = new ethers.providers.Web3Provider(instance);
-      await provider.send('eth_requestAccounts', []);
+      await provider.provider.request({ method:'eth_requestAccounts'});
       signer = provider.getSigner();
       await signer.getAddress().then(() => {
         getWallet();
@@ -409,20 +407,19 @@ async function connect() {
         getWallet();
       });
       instance.on('chainChanged', (chainId) => {
+        // console.log(chainId);
         getWallet();
       });
     } catch (e) {
       console.log('Could not get a wallet connection', e);
       return 'err';
     }
-  // } else if (connectInfo === 'Loading...') {
-  //   console.log('Page is Loading...');
-  // }
 }
 async function getWallet() {
   const params = [{ chainId: metamaskHexChainID }];
   const addr = await signer.getAddress();
-  await provider.provider
+  try {
+    await provider.provider
     .request({
       method: 'wallet_switchEthereumChain',
       params: params,
@@ -432,7 +429,20 @@ async function getWallet() {
       document.getElementById('transfer').style.display = 'block';
       document.getElementById('connectW').style.display = 'none';
     });
-  // console.log(addr);
+  } catch (switchError) {
+    console.log('111');
+    if (switchError.code === 4902) {
+      try {
+        await provider.provider.request({
+          method: 'wallet_addEthereumChain',
+          params: params,
+        });
+        console.log('rrr');
+      } catch (addError) {
+        console.log('eeee');
+      }
+    }
+  }
 }
 function decrement() {
   contractMinMint = document.getElementById('nftsNumber').textContent;
