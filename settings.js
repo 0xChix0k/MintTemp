@@ -1,11 +1,14 @@
 const collectionInfo = {
-  projectName: 'Joke NFT',
-  lunchDate: '10.20.2022',
+  projectName: 'My NFT',
+  lunchDate: '11.24.2022',
   maxTotal: '10000',
+  //wei
+  price: '100000000000000000',
+  ethFixed:1,
   minMint:'1',
   maxMint: '2',
   socialMedia: {
-    discord: 'discord.gg/invite_here',
+    discord: '',
     twitter: 'https://twitter.com/username_here',
   },
   medias: {

@@ -20,9 +20,24 @@ const ABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'approved', type: 'address' },
-      { indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'approved',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
     ],
     name: 'Approval',
     type: 'event',
@@ -30,8 +45,18 @@ const ABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'operator', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
       { indexed: false, internalType: 'bool', name: 'approved', type: 'bool' },
     ],
     name: 'ApprovalForAll',
@@ -40,8 +65,18 @@ const ABI = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: 'address', name: 'previousOwner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'newOwner', type: 'address' },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
     ],
     name: 'OwnershipTransferred',
     type: 'event',
@@ -51,7 +86,12 @@ const ABI = [
     inputs: [
       { indexed: true, internalType: 'address', name: 'from', type: 'address' },
       { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-      { indexed: true, internalType: 'uint256', name: 'tokenId', type: 'uint256' },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
     ],
     name: 'Transfer',
     type: 'event',
@@ -135,7 +175,13 @@ const ABI = [
     stateMutability: 'view',
     type: 'function',
   },
-  { inputs: [], name: 'name', outputs: [{ internalType: 'string', name: '', type: 'string' }], stateMutability: 'view', type: 'function' },
+  {
+    inputs: [],
+    name: 'name',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
   {
     inputs: [],
     name: 'owner',
@@ -167,7 +213,13 @@ const ABI = [
     stateMutability: 'view',
     type: 'function',
   },
-  { inputs: [], name: 'preMintTarget', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [],
+    name: 'preMintTarget',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
   {
     inputs: [],
     name: 'preSaleMax',
@@ -189,7 +241,13 @@ const ABI = [
     stateMutability: 'payable',
     type: 'function',
   },
-  { inputs: [], name: 'renounceOwnership', outputs: [], stateMutability: 'nonpayable', type: 'function' },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
   {
     inputs: [],
     name: 'root',
@@ -252,7 +310,9 @@ const ABI = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: '_withdrawAddr', type: 'address' }],
+    inputs: [
+      { internalType: 'address', name: '_withdrawAddr', type: 'address' },
+    ],
     name: 'setwithdrawAddr',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -321,7 +381,13 @@ const ABI = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  { inputs: [], name: 'withdrawAll', outputs: [], stateMutability: 'payable', type: 'function' },
+  {
+    inputs: [],
+    name: 'withdrawAll',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
 ];
 //主網請打 : '1'
 const metamaskChainID = 11155111;
@@ -333,6 +399,7 @@ const infura_Id = 'c780b7e9416640ac8550712b8ed6c1ac';
 const apiURL = `https://${chainName}.infura.io/v3/${infura_Id}`;
 const Web3Modal = window.Web3Modal.default;
 const WalletConnectProvider = window.WalletConnectProvider.default;
+const fixed = collectionInfo.ethFixed;
 let web3Modal;
 let provider;
 let myContract;
@@ -370,50 +437,47 @@ async function init() {
 async function getNFTInfo() {
   provider = new ethers.providers.JsonRpcProvider(apiURL);
   myContract = new ethers.Contract(address, ABI, provider);
-  price = await myContract.price();
-  contractPrice = parseFloat(ethers.utils.formatUnits(price, 'ether')).toFixed(2);
+  price = collectionInfo.price;
+  contractPrice = parseFloat(ethers.utils.formatUnits(price, 'ether')).toFixed(
+    fixed
+  );
+  // contractPrice = collectionInfo.price
   contractMinMint = Number(collectionInfo.minMint);
   contractMaxMint = Number(collectionInfo.maxMint);
   totalSupply = await myContract.totalSupply();
 }
 async function writeInfo() {
-  document.getElementById('totalSupply').innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
+  document.getElementById(
+    'totalSupply'
+  ).innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
   document.getElementById('nftPrice').innerText = contractPrice;
-  document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
+  document.getElementById('price').innerText = `${(
+    contractPrice * contractMinMint
+  ).toFixed(fixed)}`;
   document.getElementById('connectW').innerText = 'CONNECT WALLET';
   // document.getElementById('connectInfo').innerText = 'UNCONNECT...';
 }
-// function isConnect() {
-//   const isConnect = document.getElementById('connectInfo').textContent;
-//   if (isConnect !== 'UNCONNECT...') {
-//     // console.log(true);
-//     return true;
-//   } else {
-//     // console.log(false);
-//     return false;
-//   }
-// }
 async function connect() {
-    web3Wallet();
-    try {
-      const instance = await web3Modal.connect();
-      provider = new ethers.providers.Web3Provider(instance);
-      await provider.provider.request({ method:'eth_requestAccounts'});
-      signer = provider.getSigner();
-      await signer.getAddress().then(() => {
-        getWallet();
-      });
-      instance.on('accountsChanged', (accounts) => {
-        getWallet();
-      });
-      instance.on('chainChanged', (chainId) => {
-        // console.log(chainId);
-        getWallet();
-      });
-    } catch (e) {
-      console.log('Could not get a wallet connection', e);
-      return 'err';
-    }
+  web3Wallet();
+  try {
+    const instance = await web3Modal.connect();
+    provider = new ethers.providers.Web3Provider(instance);
+    await provider.provider.request({ method: 'eth_requestAccounts' });
+    signer = provider.getSigner();
+    await signer.getAddress().then(() => {
+      getWallet();
+    });
+    instance.on('accountsChanged', (accounts) => {
+      getWallet();
+    });
+    instance.on('chainChanged', (chainId) => {
+      // console.log(chainId);
+      getWallet();
+    });
+  } catch (e) {
+    console.log('Could not get a wallet connection', e);
+    return 'err';
+  }
 }
 async function getWallet() {
   const params = [{ chainId: metamaskHexChainID }];
@@ -424,7 +488,8 @@ async function getWallet() {
       params: params,
     })
     .then(() => {
-      document.getElementById('connectInfo').textContent = addr.slice(0, 6) + '...' + addr.slice(-3);
+      document.getElementById('connectInfo').textContent =
+        addr.slice(0, 6) + '...' + addr.slice(-3);
       document.getElementById('transfer').style.display = 'block';
       document.getElementById('connectW').style.display = 'none';
     });
@@ -437,7 +502,9 @@ function decrement() {
     contractMinMint--;
   }
   document.getElementById('nftsNumber').textContent = contractMinMint;
-  document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
+  document.getElementById('price').innerText = `${(
+    contractPrice * contractMinMint
+  ).toFixed(fixed)}`;
 }
 function increment() {
   let contractMinMint = document.getElementById('nftsNumber').textContent;
@@ -447,9 +514,12 @@ function increment() {
     contractMinMint++;
   }
   document.getElementById('nftsNumber').textContent = contractMinMint;
-  document.getElementById('price').innerText = `${(contractPrice * contractMinMint).toFixed(2)}`;
+  document.getElementById('price').innerText = `${(
+    contractPrice * contractMinMint
+  ).toFixed(fixed)}`;
 }
 async function mint() {
+  document.getElementById('transfer').textContent = 'Minting...';
   let amount = document.getElementById('nftsNumber').textContent;
   console.log(amount);
   let totalPrice = document.getElementById('price').textContent;
@@ -464,14 +534,20 @@ async function mint() {
         totalSupply = await myContract.totalSupply();
       })
       .then(() => {
-        alert(`Congratulations!\n You have minted ${amount} ${collectionInfo.projectName} !`);
-        document.getElementById('totalSupply').innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
+        alert(
+          `Congratulations!\n You have minted ${amount} ${collectionInfo.projectName} !`
+        );
+        document.getElementById(
+          'totalSupply'
+        ).innerText = `${totalSupply} / ${collectionInfo.maxTotal}`;
+        document.getElementById('transfer').textContent = 'Mint Now';
       });
   } catch (error) {
     console.log(error);
     if (error.code != 4001)
       alert(`Sorry! Your mint is failed...\n
         Please try it again!.`);
+    document.getElementById('transfer').textContent = 'Mint Now';
   }
 }
 //addEventListener

@@ -10,16 +10,6 @@
 
         <meta property="og:type" content="website">
         <meta name="twitter:card" content="summary_large_image">
-        <!-- <script src="https://npmcdn.com/moralis/dist/moralis.js"></script> -->
-
-        <!-- <script type="text/javascript">
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${ vh < 8.0 ? 8.0 : vh }px`);
-            window.addEventListener('resize', () => {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', `${ vh < 8.0 ? 8.0 : vh }px`);
-            });
-        </script> -->
 
         <!-- Import CSS files -->
         <link rel="stylesheet" type="text/css" href="./src/css/fonts.css" media="all">
@@ -35,16 +25,20 @@
             </video>
 
             <div class="sub-head" id="claim-text-wrapper">
-                <div class="connect">
-                    <span id="connectInfo">UNCONNECT...</span>
+                <div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+                    <div class="social_medias">
+                        <!-- <a id="social_discord" href="https://discord.gg/" class="item discord social_media"
+                            target="_blank"><img src="./assets/svg/Discord_Icon.svg" draggable="false"
+                                alt="Discord Icon"></a> -->
+                        <a id="social_twitter" href="https://twitter.com/" class="item twitter social_media"
+                            target="_blank"><img src="./assets/svg/Twitter_Icon.svg" draggable="false"
+                                alt="Twitter Icon"></a>
+                    </div>
+                    <div class="connect">
+                        <span id="connectInfo">UNCONNECT...</span>
+                    </div>
                 </div>
-                <div class="social_medias">
-                    <a id="social_discord" href="https://discord.gg/" class="item discord social_media"
-                        target="_blank"><img src="./assets/svg/Discord_Icon.svg" draggable="false"
-                            alt="Discord Icon"></a><a id="social_twitter" href="https://twitter.com/"
-                        class="item twitter social_media" target="_blank"><img src="./assets/svg/Twitter_Icon.svg"
-                            draggable="false" alt="Twitter Icon"></a>
-                </div>
+
                 <div id="payment-modal">
                     <div id="payment-header">
                         <div id="payment-header-text">
